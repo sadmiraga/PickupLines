@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  RefreshControl
 } from "react-native";
 
 import {
@@ -23,7 +24,8 @@ class homeScreen extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      dataSource: []
+      dataSource: [],
+      refreshing: false
     };
   }
 
@@ -40,6 +42,15 @@ class homeScreen extends Component {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  //refreshing
+  handleRefresh() {
+    this.componentDidMount();
+
+    this.setState({
+      refreshing: false
+    });
   }
 
   //icon
@@ -66,7 +77,15 @@ class homeScreen extends Component {
       });
       return (
         //display pickup lines
-        <ScrollView style={styles.container}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => this.handleRefresh()}
+              refreshing={this.state.refreshing}
+            />
+          }
+          style={styles.container}
+        >
           <Header
             style={{
               justifyContent: "flex-start",
