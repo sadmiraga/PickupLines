@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  ScrollView
+} from "react-native";
 
 import {
   Icon,
@@ -12,6 +18,30 @@ import {
 } from "native-base";
 
 class homeScreen extends Component {
+  //constructor
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      dataSource: []
+    };
+  }
+
+  //this runs when page loads
+  componentDidMount() {
+    return fetch("https://sheetsu.com/apis/v1.0bu/9ef5d584d94a")
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   //icon
   static navigationOptions = {
     drawerIcon: ({ tintColor }) => (
@@ -20,28 +50,41 @@ class homeScreen extends Component {
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Header style={styles.header}>
-          <Icon
-            name="menu"
-            onPress={() => this.props.navigation.openDrawer()}
-          />
-        </Header>
-        <Text
-          style={{
-            margin: 30,
-            backgroundColor: "black",
-            color: "white",
-            borderRadius: 10,
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          Home
-        </Text>
-      </View>
-    );
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.container}>
+          <ActivityIndicator />
+        </View>
+      );
+    } else {
+      let data = this.state.dataSource.map((val, key) => {
+        return (
+          <View key={key} style={styles.item}>
+            <Text style={styles.pickupText}>{val.text}</Text>
+          </View>
+        );
+      });
+      return (
+        //display pickup lines
+        <ScrollView style={styles.container}>
+          <Header
+            style={{
+              justifyContent: "flex-start",
+              alignItems: "center",
+              backgroundColor: "white"
+            }}
+          >
+            <Left>
+              <Icon
+                name="menu"
+                onPress={() => this.props.navigation.openDrawer()}
+              />
+            </Left>
+          </Header>
+          {data}
+        </ScrollView>
+      );
+    }
   }
 }
 
@@ -56,5 +99,20 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "white"
+  },
+  item: {
+    backgroundColor: "black",
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 10,
+    borderRadius: 60,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  pickupText: {
+    color: "white",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
