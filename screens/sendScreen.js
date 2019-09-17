@@ -26,7 +26,7 @@ class sendScreen extends Component {
           style={{
             justifyContent: "flex-start",
             alignItems: "center",
-            backgroundColor: "orange"
+            backgroundColor: "white"
           }}
         >
           <Left>

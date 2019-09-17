@@ -22,13 +22,7 @@ class homeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header
-          style={{
-            justifyContent: "flex-start",
-            alignItems: "center",
-            backgroundColor: "orange"
-          }}
-        >
+        <Header style={styles.header}>
           <Icon
             name="menu"
             onPress={() => this.props.navigation.openDrawer()}
@@ -57,5 +51,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "orange"
+  },
+  header: {
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "white"
   }
 });
