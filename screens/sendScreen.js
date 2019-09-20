@@ -28,9 +28,29 @@ class sendScreen extends Component {
     )
   };
 
-  //send Email
+  //send pickupline
   sendFunction = () => {
-    console.warn(this.state.mail);
+    fetch(
+      "https://sheet.best/api/sheets/9e603e75-95ac-498b-a3c9-233fa131e01a",
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+          id: "1",
+          text: this.state.mail,
+          approve: "no"
+        })
+      }
+    )
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.warn(json);
+      });
   };
 
   render() {

@@ -31,7 +31,9 @@ class homeScreen extends Component {
 
   //this runs when page loads
   componentDidMount() {
-    return fetch("https://sheetsu.com/apis/v1.0bu/9ef5d584d94a")
+    return fetch(
+      "https://sheet.best/api/sheets/39a00c22-30f5-4ab3-b159-d402f40c4eeb"
+    )
       .then(response => response.json())
       .then(responseJson => {
         this.setState({
@@ -64,7 +66,11 @@ class homeScreen extends Component {
     if (this.state.isLoading) {
       return (
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator
+            color="black"
+            size="large"
+            style={styles.loadingCircle}
+          />
         </View>
       );
     } else {
@@ -135,5 +141,11 @@ const styles = StyleSheet.create({
     color: "white",
     justifyContent: "center",
     alignItems: "center"
+  },
+  loadingCircle: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    color: "red"
   }
 });
