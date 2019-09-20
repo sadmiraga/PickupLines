@@ -38,18 +38,20 @@ class sendScreen extends Component {
           "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify({
-          id: "1",
-          text: this.state.mail,
-          approve: "no"
-        })
+        body: JSON.stringify([
+          {
+            id: 0,
+            text: this.state.mail,
+            approve: "no"
+          }
+        ])
       }
     )
       .then(response => {
         return response.json();
       })
       .then(json => {
-        console.warn(json);
+        console.log(json);
       });
   };
 
