@@ -69,11 +69,13 @@ class homeScreen extends Component {
       );
     } else {
       let data = this.state.dataSource.map((val, key) => {
-        return (
-          <View key={key} style={styles.item}>
-            <Text style={styles.pickupText}>{val.text}</Text>
-          </View>
-        );
+        if (val.approve == "yes") {
+          return (
+            <View key={key} style={styles.item}>
+              <Text style={styles.pickupText}>{val.text}</Text>
+            </View>
+          );
+        }
       });
       return (
         //display pickup lines
