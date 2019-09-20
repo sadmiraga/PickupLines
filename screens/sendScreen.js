@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 
 import {
   Icon,
@@ -28,6 +28,16 @@ class sendScreen extends Component {
     )
   };
 
+  //display message that you sent you data
+  successMessage = () => {
+    Alert.alert(
+      "Success",
+      "You successfully sent your pickup line",
+      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+      { cancelable: false }
+    );
+  };
+
   //send pickupline
   sendFunction = () => {
     fetch(
@@ -40,7 +50,7 @@ class sendScreen extends Component {
         method: "POST",
         body: JSON.stringify([
           {
-            id: 0,
+            id: 1,
             text: this.state.mail,
             approve: "no"
           }
@@ -52,6 +62,7 @@ class sendScreen extends Component {
       })
       .then(json => {
         console.log(json);
+        this.successMessage();
       });
   };
 
