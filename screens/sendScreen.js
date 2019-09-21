@@ -36,6 +36,9 @@ class sendScreen extends Component {
       [{ text: "OK", onPress: () => console.log("OK Pressed") }],
       { cancelable: false }
     );
+
+    //clear textinput
+    this.mail.clear();
   };
 
   //send pickupline
@@ -86,6 +89,9 @@ class sendScreen extends Component {
 
         <View style={styles.sendBoxContainer}>
           <TextInput
+            ref={input => {
+              this.mail = input;
+            }}
             style={styles.sendBox}
             placeholder="Send us Pickup Line"
             onChangeText={mail => this.setState({ mail })}
